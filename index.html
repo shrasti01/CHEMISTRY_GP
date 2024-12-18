@@ -176,23 +176,31 @@
         };
 
         function getElementInfo() {
-            const input = document.getElementById("elementInput").value.trim();
-            const key = Object.keys(elementData).find(k =>
-                k.toLowerCase() === input.toLowerCase() || elementData[k].name.toLowerCase() === input.toLowerCase()
-            );
-            const output = document.getElementById("output");
+            const input = document.getElementById('elementInput').value.trim();
+            const output = document.getElementById('output');
+            
+            if (!input) {
+                output.innerHTML = '<p style="color: red;">Please enter an element name or symbol.</p>';
+                return;
+            }
 
-            if (key) {
-                const element = elementData[key];
+            const elementKey = Object.keys(elementData).find(
+                key => key.toLowerCase() === input.toLowerCase() || 
+                       elementData[key].name.toLowerCase() === input.toLowerCase()
+            );
+
+            if (elementKey) {
+                const element = elementData[elementKey];
                 output.innerHTML = `
-                    <h3>${element.name} (${key})</h3>
-                    <p><strong>Melting Point:</strong> ${element.meltingPoint} °C</p>
-                    <p><strong>Boiling Point:</strong> ${element.boilingPoint} °C</p>
+                    <h2>${element.name} (${elementKey})</h2>
+                    <p><strong>Melting Point:</strong> ${element.meltingPoint}°C</p>
+                    <p><strong>Boiling Point:</strong> ${element.boilingPoint}°C</p>
                 `;
             } else {
-                output.innerHTML = <p>Element not found. Please check your input.</p>;
+                output.innerHTML = '<p style="color: red;">Element not found. Please check your input.</p>';
             }
         }
+
     </script>
 </body>
 </html>
